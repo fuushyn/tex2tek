@@ -1,15 +1,22 @@
-const searchButton = document.getElementById("search-button");
+// const searchButton = document.getElementById("search-button");
 const searchInput = document.getElementById("search-input");
 const resultsContainer = document.getElementById("results-container");
 const resultDiv = document.getElementById("results")
 
-searchButton.addEventListener("click", () => {
-	const searchTerm = searchInput.value;
-  console.log('button clicked!')
+searchInput.addEventListener("input", () => {
+	const searchTerm = searchInput.value.trim();
+  if(!searchTerm.endsWith(".")){
+    return;
+  }
+  console.log(`converting ${searchTerm}`);
+
+  resultsContainer.innerHTML = `			<h2>Results</h2>
+  <div id="results"></div>`
+
 	// Call your backend API with the search term and display the results below
 	// Here's a mock API call that returns a simple message
   let data = {
-    "text": searchTerm + ". Generate Latex. "
+    "text": searchTerm + ". Generate only Latex, don't return any other text. "
   }
 	let url = "https://pa-rephrase.onrender.com/api"
   fetch(url, {
@@ -33,7 +40,7 @@ searchButton.addEventListener("click", () => {
 
       data = JSON.parse(data)
       console.log(data)
-      resultDiv.innerText = data.message;
+      // resultDiv.innerText = data.message;
 
       // var text = "$$\\int (a + b) dx = \\int a dx + \\int b dx$$"
 
